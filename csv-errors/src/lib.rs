@@ -1,11 +1,15 @@
 use csv::Reader;
 use serde::Deserialize;
-use std::io::Write;
 
 #[derive(Deserialize)]
 pub struct Reservation {
     guest: String,
     checked_in: bool,
+}
+#[derive(Deserialize)]
+pub struct Location {
+    country: String,
+    locality: String,
 }
 /// count the number of reservations
 pub fn count_reservations(bytes: &[u8]) -> Result<usize, Box<dyn std::error::Error>> {
@@ -20,8 +24,6 @@ pub fn count_reservations(bytes: &[u8]) -> Result<usize, Box<dyn std::error::Err
 #[cfg(test)]
 mod tests {
     use super::*;
-    use csv::ErrorKind;
-    use csv::Reader;
     #[test]
     fn reservation_count() {
         let reservations = "guest,checked_in
